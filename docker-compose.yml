@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  backend:
+    env_file:
+      - ./backend/.env
+    container_name: "app_backend"
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/backend
+    environment:
+      - DB_HOST=db
+    networks:
+      - mynetwork
+    depends_on:
+      - database
+
+  database:
+    env_file:
+      - ./backend/.env
+    container_name: "app_database"
+    image: postgres:16.0-alpine3.18
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB="db"
+      - POSTGRES_USER="postgress"
+      - POSTGRES_PASSWORD="pass"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    name: "app_network"
