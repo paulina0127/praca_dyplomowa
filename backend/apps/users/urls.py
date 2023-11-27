@@ -1,3 +1,5 @@
+"""Urls for Users app."""
+
 # Django
 from django.urls import include
 from django.urls import path

@@ -20,7 +20,6 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.CustomUser"
 
-
 # Database
 DATABASES = {
     "default": {
@@ -42,8 +41,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Local apps
-    "core",
-    "users",
+    "apps.core",
+    "apps.users",
+    "apps.animals",
+    "apps.profiles",
     # Third party apps
     "rest_framework",
     "rest_framework_simplejwt",
@@ -113,6 +114,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = "/media/"
 # DEFAULT_FILE_STORAGE = "backend.utils.storage.CustomStorage"
 
+# Email
+EMAIL_BACKEND = env.str("EMAIL_BACKEND")
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
+EMAIL_HOST = env.str("EMAIL_HOST")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
+EMAIL_PORT = env.str("EMAIL_PORT")
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
@@ -149,13 +160,13 @@ DJOSER = {
     "USERNAME_RESET_CONFIRM_URL": "resetowanie-adresu-email/{uid}/{token}",
     "ACTIVATION_URL": "aktywacja-konta/{uid}/{token}",
     # Email notifications
-    "USERNAME_CHANGED_EMAIL_CONFIRMATION": False,
-    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": False,
-    "SEND_CONFIRMATION_EMAIL": False,
-    "SEND_ACTIVATION_EMAIL": False,
+    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
+    "SEND_CONFIRMATION_EMAIL": True,
+    "SEND_ACTIVATION_EMAIL": True,
     "SERIALIZERS": {
-        "user_create_password_retype": "users.utils.serializers.UserCreateSerializer",
-        "user": "users.utils.serializers.CustomUserSerializer",
-        "current_user": "users.utils.serializers.CustomUserSerializer",
+        "user_create_password_retype": "apps.users.utils.serializers.UserCreateSerializer",
+        "user": "apps.users.utils.serializers.CustomUserSerializer",
+        "current_user": "apps.users.utils.serializers.CustomUserSerializer",
     },
 }

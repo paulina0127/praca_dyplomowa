@@ -1,3 +1,5 @@
+"""Serializers for Users app."""
+
 # Django
 from django.contrib.auth import get_user_model
 
@@ -5,6 +7,9 @@ from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer
 from djoser.serializers import UserSerializer
 from rest_framework import serializers
+
+# Project
+from apps.profiles.models import Shelter
 
 # Local
 from .choices import UserRole
@@ -29,6 +34,20 @@ class DefaultUserSerializer(UserSerializer):
         fields = ["id", "email", "role"]
 
 
+class ShelterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shelter
+        fields = ["name", "image"]
+
+
+class ShelterUserSerializer(UserSerializer):
+    profile = ShelterSerializer(read_only=True, source="shelter_profile")
+
+    class Meta(UserSerializer.Meta):
+        model = User
+        fields = ["id", "email", "type", "profile"]
+
+
 class CustomUserSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
         model = User
@@ -46,11 +65,11 @@ class CustomUserSerializer(UserSerializer):
     def to_representation(self, instance):
         user = self.context["request"].user
 
-        # Return user serializer for shelter
         if user.is_anonymous:
             return
+        # Return user serializer for shelter
         elif user.role == UserRole.SHELTER:
-            serializer = DefaultUserSerializer(instance, context=self.context)
+            serializer = ShelterUserSerializer(instance, context=self.context)
         # Return default user serializer
         else:
             serializer = DefaultUserSerializer(instance, context=self.context)

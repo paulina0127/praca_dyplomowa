@@ -1,21 +1,18 @@
-"""Models file for Users app."""
+"""Models for Users app."""
 
 # Django
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 # Local
 from .utils.choices import UserRole
 
 
 class CustomUserManager(BaseUserManager):
-    """Custom user manager class."""
-
     def create_user(self, email, password=None, role=None, **extra_fields):
         if not email:
-            raise ValueError(_("Użytkownik musi mieć ustawione pole email."))
+            raise ValueError("Użytkownik musi mieć ustawione pole email.")
         email = self.normalize_email(email)
 
         if role is not None:
@@ -33,27 +30,19 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault("role", UserRole.ADMIN)
 
         if extra_fields.get("is_staff") is not True:
-            raise ValueError(_("Superużytkownik musi mieć ustawione is_staff na Tak."))
+            raise ValueError("Superużytkownik musi mieć ustawione is_staff na Tak.")
         if extra_fields.get("is_superuser") is not True:
-            raise ValueError(
-                _("Superużytkownik musi mieć is_superuser ustawione na Tak.")
-            )
+            raise ValueError("Superużytkownik musi mieć is_superuser ustawione na Tak.")
 
         return self.create_user(email, password, **extra_fields)
 
 
 class CustomUser(AbstractUser):
-    """Custom user model class."""
-
     username = None
     email = models.EmailField(
         unique=True,
     )
-    role = models.CharField(
-        choices=UserRole.choices,
-        max_length=10,
-        verbose_name=_("Rola"),
-    )
+    role = models.CharField(choices=UserRole.choices, max_length=10)
 
     objects = CustomUserManager()
 
@@ -61,8 +50,4 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
-        ordering = [
-            "id",
-        ]
-        verbose_name = _("Użytkownik")
-        verbose_name_plural = _("Użytkownicy")
+        ordering = ["id"]
