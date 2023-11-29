@@ -23,6 +23,7 @@ urlpatterns = [
     path("", include("apps.users.urls")),
     path("", include("apps.animals.urls")),
     path("", include("apps.profiles.urls")),
+    path("", include("apps.applications.urls")),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),

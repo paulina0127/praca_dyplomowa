@@ -4,6 +4,13 @@
 from django.db import models
 
 
+class AnimalStatus(models.TextChoices):
+    ADOPTED = "Adoptowany", "Adoptowany"
+    TO_BE_ADOPTED = "Do adopcji", "Do adopcji"
+    TEMPORARY_HOME = "W domu tymczasowym", "W domu tymczasowym"
+    DECEASED = "Zmarły", "Zmarły"
+
+
 class AnimalSex(models.TextChoices):
     MALE = "Samiec", "Samiec"
     FEMALE = "Samica", "Samica"

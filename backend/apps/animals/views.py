@@ -1,4 +1,5 @@
 """Views for Animals app."""
+
 # Django
 from django.core.exceptions import BadRequest
 
@@ -32,7 +33,7 @@ class AnimalList(generics.ListCreateAPIView):
 
     def get_serializer_class(self):
         # Return serializer for creating animals
-        if self.request.method == "POST":
+        if self.request.method in ["POST", "PATCH"]:
             return CreateAnimalSerializer
         else:
             return AnimalSerializer  # Default serializer class

@@ -7,6 +7,12 @@ from rest_framework import serializers
 from ..models import Shelter
 
 
+class CreateShelterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shelter
+        fields = "__all__"
+
+
 class ShelterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shelter

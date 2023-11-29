@@ -15,17 +15,23 @@ from rest_framework.response import Response
 
 # Local
 from .models import Shelter
-from .utils.serializers import ShelterSerializer
+from .utils.serializers import ShelterSerializer, CreateShelterSerializer
 
 
 class ShelterList(generics.ListCreateAPIView):
     queryset = Shelter.objects.all()
-    serializer_class = ShelterSerializer
     name = "shelters"
     # filterset_class = AnimalFilter
     search_fields = ["name"]
     ordering_fields = ["id"]
     parser_classes = [MultiPartParser, JSONParser]
+
+    def get_serializer_class(self):
+        # Return serializer for creating shelters
+        if self.request.method == "POST":
+            return CreateShelterSerializer
+        else:
+            return ShelterSerializer  # Default serializer class
 
 
 class ShelterDetail(generics.RetrieveUpdateDestroyAPIView):

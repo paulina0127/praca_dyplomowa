@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "apps.users",
     "apps.animals",
     "apps.profiles",
+    "apps.applications",
     # Third party apps
     "rest_framework",
     "rest_framework_simplejwt",

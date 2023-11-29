@@ -12,7 +12,7 @@ from .models import Breed
 
 @admin.register(Breed)
 class BreedAdmin(admin.ModelAdmin):
-    list_display = ["name", "species"]
+    list_display = ["id", "name", "species"]
 
 
 @admin.register(Animal)
