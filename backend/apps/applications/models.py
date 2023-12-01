@@ -3,9 +3,11 @@
 # Django
 from django.db import models
 
+# Third-party
+from phonenumber_field.modelfields import PhoneNumberField
+
 # Project
 from apps.animals.models import Animal
-from phonenumber_field.modelfields import PhoneNumberField
 
 # Local
 from .utils.choices import ApplicationStatus

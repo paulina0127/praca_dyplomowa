@@ -13,8 +13,8 @@ from .utils.choices import AnimalEnergyLevel
 from .utils.choices import AnimalSex
 from .utils.choices import AnimalSize
 from .utils.choices import AnimalSpecies
-from .utils.choices import AnimalTemperament
 from .utils.choices import AnimalStatus
+from .utils.choices import AnimalTemperament
 
 
 class Breed(models.Model):

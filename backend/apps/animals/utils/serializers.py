@@ -3,11 +3,13 @@
 # Third-party
 from rest_framework import serializers
 
+# Project
+from apps.profiles.models import Shelter
+
 # Local
 from ..models import Animal
 from ..models import AnimalImage
 from ..models import Breed
-from apps.profiles.models import Shelter
 
 
 class AnimalShelterSerializer(serializers.ModelSerializer):

@@ -1,34 +1,26 @@
 """Views for Profiles app."""
 
-# Django
-from django.core.exceptions import BadRequest
-
 # Third-party
 from rest_framework import generics
-from rest_framework import serializers
-from rest_framework import status
-from rest_framework.parsers import JSONParser
-from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import DjangoModelPermissions
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 # Local
 from .models import Shelter
-from .utils.serializers import ShelterSerializer, CreateShelterSerializer
+from .utils.permissions import ShelterBaseAccess
+from .utils.serializers import CreateShelterSerializer
+from .utils.serializers import ShelterSerializer
 
 
 class ShelterList(generics.ListCreateAPIView):
     queryset = Shelter.objects.all()
     name = "shelters"
-    # filterset_class = AnimalFilter
-    search_fields = ["name"]
+    filterset_fields = ["city"]
+    search_fields = ["name", "nip"]
     ordering_fields = ["id"]
-    parser_classes = [MultiPartParser, JSONParser]
 
     def get_serializer_class(self):
-        # Return serializer for creating shelters
-        if self.request.method == "POST":
+        # Return serializer for creating / updating shelters
+        if self.request.method in ["POST", "PUT", "PATCH"]:
             return CreateShelterSerializer
         else:
             return ShelterSerializer  # Default serializer class
@@ -38,4 +30,4 @@ class ShelterDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Shelter.objects.all()
     serializer_class = ShelterSerializer
     name = "shelter"
-    parser_classes = [MultiPartParser, JSONParser]
+    permission_classes = [IsAuthenticated, ShelterBaseAccess]

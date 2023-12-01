@@ -13,6 +13,7 @@ from .models import Breed
 @admin.register(Breed)
 class BreedAdmin(admin.ModelAdmin):
     list_display = ["id", "name", "species"]
+    list_filter = ["species"]
 
 
 @admin.register(Animal)

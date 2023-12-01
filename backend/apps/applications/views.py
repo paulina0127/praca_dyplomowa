@@ -1,35 +1,48 @@
 """Views for Applications app."""
 
-# Django
-from django.core.exceptions import BadRequest
-
 # Third-party
 from rest_framework import generics
-from rest_framework import serializers
-from rest_framework import status
-from rest_framework.parsers import JSONParser
-from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import DjangoModelPermissions
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+# Project
+from apps.users.utils.choices import UserRole
 
 # Local
 from .models import Application
+from .utils.permissions import ApplicationBaseAccess
 from .utils.serializers import ApplicationSerializer
 
 
 class ApplicationList(generics.ListCreateAPIView):
-    queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
     name = "applications"
-    # filterset_class = AnimalFilter
-    search_fields = ["first_name"]
-    ordering_fields = ["id"]
-    parser_classes = [MultiPartParser, JSONParser]
+    filterset_fields = ["status", "animal"]
+    search_fields = ["first_name", "last_name"]
+    ordering_fields = ["id", "added_at"]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        # Return shelter's applications
+        if user.type == UserRole.SHELTER:
+            return Application.objects.filter(animal__shelter=user.shelter)
+        # Return all applications if the user is admin
+        else:
+            return Application.objects.all()
 
 
 class ApplicationDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
     name = "application"
-    parser_classes = [MultiPartParser, JSONParser]
+    permission_classes = [IsAuthenticated, ApplicationBaseAccess]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        # Return shelter's applications
+        if user.type == UserRole.SHELTER:
+            return Application.objects.filter(animal__shelter=user.shelter)
+        # Return all applications if the user is admin
+        else:
+            return Application.objects.all()

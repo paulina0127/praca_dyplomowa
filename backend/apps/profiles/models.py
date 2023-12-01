@@ -24,7 +24,7 @@ class Shelter(models.Model):
     image = models.ImageField(upload_to="shelters/images", blank=True, null=True)
     account = models.OneToOneField(
         to=User,
-        related_name="shelter_profile",
+        related_name="shelter",
         on_delete=models.CASCADE,
     )
 

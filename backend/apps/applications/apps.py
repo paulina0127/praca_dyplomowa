@@ -1,5 +1,6 @@
 """Apps file for Applications app."""
 
+# Django
 from django.apps import AppConfig
 
 
