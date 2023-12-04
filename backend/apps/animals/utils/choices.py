@@ -61,3 +61,10 @@ class AnimalEnergyLevel(models.TextChoices):
     LOW = "Kanapowiec", "Kanapowiec"
     AVERAGE = "Aktywny", "Aktywny"
     HIGH = "Bardzo aktywny", "Bardzo aktywny"
+
+
+class AnimalActivities(models.TextChoices):
+    PLAYING = "Zabawa", "Zabawa"
+    WALKS = "Spacery", "Spacery"
+    TRAINING = "Szkolenie", "Szkolenie"
+    PETTING = "Pieszczoty", "Pieszczoty"

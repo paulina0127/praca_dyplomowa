@@ -34,7 +34,7 @@ class AnimalImageSerializer(serializers.ModelSerializer):
 class BreedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Breed
-        fields = ["name"]
+        fields = "__all__"
 
 
 class AnimalSerializer(serializers.ModelSerializer):

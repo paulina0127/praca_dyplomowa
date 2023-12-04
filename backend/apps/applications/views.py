@@ -19,13 +19,13 @@ class ApplicationList(generics.ListCreateAPIView):
     filterset_fields = ["status", "animal"]
     search_fields = ["first_name", "last_name"]
     ordering_fields = ["id", "added_at"]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, ApplicationBaseAccess]
 
     def get_queryset(self):
         user = self.request.user
 
         # Return shelter's applications
-        if user.type == UserRole.SHELTER:
+        if user.role == UserRole.SHELTER:
             return Application.objects.filter(animal__shelter=user.shelter)
         # Return all applications if the user is admin
         else:
@@ -41,7 +41,7 @@ class ApplicationDetail(generics.RetrieveUpdateDestroyAPIView):
         user = self.request.user
 
         # Return shelter's applications
-        if user.type == UserRole.SHELTER:
+        if user.role == UserRole.SHELTER:
             return Application.objects.filter(animal__shelter=user.shelter)
         # Return all applications if the user is admin
         else:

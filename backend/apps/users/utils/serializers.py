@@ -45,7 +45,7 @@ class ShelterUserSerializer(UserSerializer):
 
     class Meta(UserSerializer.Meta):
         model = User
-        fields = ["id", "email", "type", "profile"]
+        fields = ["id", "email", "role", "profile"]
 
 
 class CustomUserSerializer(UserSerializer):

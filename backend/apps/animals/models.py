@@ -8,6 +8,7 @@ from django.db import models
 from apps.profiles.models import Shelter
 
 # Local
+from .utils.choices import AnimalActivities
 from .utils.choices import AnimalAge
 from .utils.choices import AnimalEnergyLevel
 from .utils.choices import AnimalSex
@@ -57,7 +58,11 @@ class Animal(models.Model):
     )
     trained = models.BooleanField(blank=True, null=True)
     medical_needs = ArrayField(models.TextField(), blank=True, default=list)
-    activities = ArrayField(models.TextField(), blank=True, default=list)
+    activities = ArrayField(
+        models.CharField(max_length=50, choices=AnimalActivities.choices),
+        blank=True,
+        default=list,
+    )
     shelter = models.ForeignKey(
         to=Shelter, on_delete=models.CASCADE, related_name="animals"
     )

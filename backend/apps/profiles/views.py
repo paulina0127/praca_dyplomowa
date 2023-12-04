@@ -2,7 +2,6 @@
 
 # Third-party
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
 
 # Local
 from .models import Shelter
@@ -17,6 +16,7 @@ class ShelterList(generics.ListCreateAPIView):
     filterset_fields = ["city"]
     search_fields = ["name", "nip"]
     ordering_fields = ["id"]
+    permission_classes = [ShelterBaseAccess]
 
     def get_serializer_class(self):
         # Return serializer for creating / updating shelters
@@ -30,4 +30,4 @@ class ShelterDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Shelter.objects.all()
     serializer_class = ShelterSerializer
     name = "shelter"
-    permission_classes = [IsAuthenticated, ShelterBaseAccess]
+    permission_classes = [ShelterBaseAccess]
