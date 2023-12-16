@@ -27,6 +27,14 @@ class UserCreateSerializer(UserCreateSerializer):
             "role",
         ]
 
+    def validate_role(self, value):
+        # Sprawdź, czy rola to "admin" i jeśli tak, podnieś błąd PermissionDenied
+        if value == UserRole.ADMIN:
+            raise serializers.ValidationError(
+                "Nie masz uprawnień by ustawić rolę 'Admin'"
+            )
+        return value
+
 
 class DefaultUserSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
@@ -37,11 +45,11 @@ class DefaultUserSerializer(UserSerializer):
 class ShelterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shelter
-        fields = ["name", "image"]
+        fields = ["id", "name", "image"]
 
 
 class ShelterUserSerializer(UserSerializer):
-    profile = ShelterSerializer(read_only=True, source="shelter_profile")
+    profile = ShelterSerializer(read_only=True, source="shelter")
 
     class Meta(UserSerializer.Meta):
         model = User

@@ -21,10 +21,15 @@ services:
     build:
       context: ./frontend
     container_name: "app_frontend"
+    environment:
+      - WDS_SOCKET_HOST=127.0.0.1
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: npm run start
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/frontend
+      - ./frontend:/app
     networks:
       - mynetwork
     depends_on:

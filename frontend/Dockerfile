@@ -1,10 +1,11 @@
 FROM node:16-alpine
 
-WORKDIR ./frontend/
+WORKDIR /frontend
 
-COPY package*.json ./frontend/
-RUN yarn install
+COPY package*.json ./
 
-COPY . ./frontend/
+RUN npm install
 
-CMD ["yarn", "start"]
+COPY . .
+
+CMD ["npm", "start"]

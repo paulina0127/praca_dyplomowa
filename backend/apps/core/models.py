@@ -1,4 +1,1 @@
-# Django
-from django.db import models
-
-# Create your models here.
+"""Models for Core app."""
