@@ -6,24 +6,24 @@ from rest_framework import generics
 # Local
 from .models import Shelter
 from .utils.permissions import ShelterBaseAccess
-from .utils.serializers import CreateShelterSerializer
 from .utils.serializers import ShelterSerializer
+from apps.users.utils.choices import UserRole
 
 
 class ShelterList(generics.ListCreateAPIView):
     queryset = Shelter.objects.all()
+    serializer_class = ShelterSerializer
     name = "shelters"
     filterset_fields = ["city"]
     search_fields = ["name", "nip"]
     ordering_fields = ["id"]
     permission_classes = [ShelterBaseAccess]
 
-    def get_serializer_class(self):
-        # Return serializer for creating / updating shelters
-        if self.request.method in ["POST", "PUT", "PATCH"]:
-            return CreateShelterSerializer
-        else:
-            return ShelterSerializer  # Default serializer class
+    def perform_create(self, serializer):
+        user = self.request.user
+
+        if user.role == UserRole.SHELTER:
+            serializer.save(user=user).clean()
 
 
 class ShelterDetail(generics.RetrieveUpdateDestroyAPIView):

@@ -2,7 +2,6 @@ import { Loader, Pagination, ShelterCard } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
 import { listShelters } from "../features/shelter/shelterSlice";
 
 const Shelters = () => {
@@ -36,31 +35,33 @@ const Shelters = () => {
 
   return (
     <>
-      <section className="container">
-        <h1 className="text-center text-3xl font-bold">
-          Współpracujące z nami schroniska
-        </h1>
+      <section className="section flex">
+        <div className="container grid grid-rows-[min-content,auto,min-content]">
+          <h1 className="text-center text-3xl font-bold">
+            Współpracujące z nami schroniska
+          </h1>
 
-        {isLoading ? (
-          <Loader />
-        ) : shelters.length > 0 ? (
-          <>
-            <div className="my-8 grid grid-cols-2 justify-items-center">
-              {shelters?.map((shelter, index) => (
-                <ShelterCard key={shelter.id} shelter={shelter} />
-              ))}
-            </div>
-            <Pagination
-              page={params.page}
-              pageSize={pageSize}
-              count={count}
-              clickBack={handleClickBack}
-              clickForward={handleClickForward}
-            />
-          </>
-        ) : (
-          <p className="my-2 text-center">Brak wyników do wyświetlenia</p>
-        )}
+          {isLoading ? (
+            <Loader />
+          ) : shelters.length > 0 ? (
+            <>
+              <div className="my-8 grid grid-cols-2 justify-items-center gap-8">
+                {shelters?.map((shelter, index) => (
+                  <ShelterCard key={shelter.id} shelter={shelter} />
+                ))}
+              </div>
+              <Pagination
+                page={params.page}
+                pageSize={pageSize}
+                count={count}
+                clickBack={handleClickBack}
+                clickForward={handleClickForward}
+              />
+            </>
+          ) : (
+            <p className="my-2 text-center">Brak wyników do wyświetlenia</p>
+          )}
+        </div>
       </section>
     </>
   );

@@ -11,16 +11,6 @@ import { toast } from "react-toastify";
 
 const initialState = {
   isLoading: false,
-  successGet: false,
-  errorGet: "",
-  successCreate: false,
-  errorCreate: "",
-  successUpdate: false,
-  errorUpdate: "",
-  successDelete: false,
-  errorDelete: "",
-  successList: false,
-  errorList: "",
   animals: [],
   count: 0,
   animal: {},
@@ -55,14 +45,11 @@ const animalSlice = createSlice({
       })
       .addCase(getAnimal.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successGet = true;
         state.animal = payload;
       })
       .addCase(getAnimal.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successGet = false;
-        state.errorGet = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas pobierania danych zwierzęcia");
       })
 
       // Create
@@ -71,14 +58,13 @@ const animalSlice = createSlice({
       })
       .addCase(createAnimal.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successCreate = true;
         state.animal = payload;
+        toast.success("Pomyślnie utworzono profil zwierzęcia");
+        // window.location.href = "/dodane-zwierzęta";
       })
       .addCase(createAnimal.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successCreate = false;
-        state.errorCreate = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas tworzenia profilu zwierzęcia");
       })
 
       // Update
@@ -87,14 +73,12 @@ const animalSlice = createSlice({
       })
       .addCase(updateAnimal.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successUpdate = true;
         state.animal = payload;
+        toast.success("Pomyślnie zapisano zmiany");
       })
       .addCase(updateAnimal.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successUpdate = false;
-        state.errorUpdate = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas aktualizowania profilu zwierzęcia");
       })
 
       // Delete
@@ -103,13 +87,12 @@ const animalSlice = createSlice({
       })
       .addCase(deleteAnimal.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successDelete = true;
+        state.animal = {};
+        window.location.href = "/dodane-zwierzęta";
       })
       .addCase(deleteAnimal.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successDelete = false;
-        state.errorDelete = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas usuwania profilu zwierzęcia");
       })
 
       // List
@@ -118,15 +101,12 @@ const animalSlice = createSlice({
       })
       .addCase(listAnimals.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successList = true;
         state.animals = payload.results;
         state.count = payload.count;
       })
       .addCase(listAnimals.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successList = false;
-        state.errorList = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas pobierania listy zwierząt");
       });
   },
 });

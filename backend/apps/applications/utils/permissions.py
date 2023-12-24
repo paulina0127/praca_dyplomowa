@@ -11,7 +11,7 @@ class ApplicationBaseAccess(BasePermission):
         # True if user is admin or shelter
         user = request.user
 
-        if user.role in [UserRole.ADMIN, UserRole.SHELTER]:
+        if user.is_authenticated and user.role in [UserRole.ADMIN, UserRole.SHELTER]:
             return True
         return False
 
@@ -19,11 +19,12 @@ class ApplicationBaseAccess(BasePermission):
         # True if user is admin or a shelter associated with the application
         user = request.user
 
-        if user.role == UserRole.ADMIN:
+        if user.is_authenticated and user.role == UserRole.ADMIN:
             return True
-        elif user.role == UserRole.SHELTER:
-            return obj.animal.shelter == user.shelter and request.method in [
-                SAFE_METHODS,
+        elif user.is_authenticated and user.role == UserRole.SHELTER:
+            return obj.animal.shelter == user.shelter and request.method in (
+                *SAFE_METHODS,
                 "PATCH",
-            ]
+            )
+
         return False

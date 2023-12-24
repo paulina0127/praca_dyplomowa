@@ -11,6 +11,7 @@ html {
 body {
   color: #303030;
   font-family: "Lato", "sans-serif";
+  font-size: 16px;
 }
 
 *,
@@ -21,9 +22,24 @@ body {
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h4,
+p,
+a,
+svg {
+  transition: all 0.3s linear;
+}
+
+.section {
+  padding: 4rem 0;
+  height: -webkit-fill-available;
+}
+
 .container {
   margin: 0 auto;
-  padding: 4rem 0;
 }
 
 .btn {
@@ -36,11 +52,49 @@ body {
   align-items: center;
   font-weight: bold;
   border-radius: 0.75rem;
+  font-family: "Lato", "sans-serif";
+  font-size: 16px;
+  cursor: pointer;
   transition: all 0.3s linear;
 }
 
 .btn:disabled {
   cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #aa1945;
+  border: 2px solid #aa1945;
+  color: #f9f1f0;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background: #d41f56;
+  border-color: #d41f56;
+  color: #f9f1f0;
+}
+
+.btn-primary:disabled {
+  background: #a9697d;
+  border-color: #a9697d;
+  color: #f9f1f0;
+}
+
+.btn-secondary {
+  border: 2px solid #aa1945;
+  color: #aa1945;
+  font-weight: bold;
+}
+
+.btn-secondary:hover {
+  border-color: #d41f56;
+  color: #d41f56;
+}
+
+.btn-secondary:disabled {
+  border-color: #a9697d;
+  color: #a9697d;
 }
 
 @media (max-width: 600px) {
@@ -58,7 +112,6 @@ body {
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
-    padding: 4rem 1rem;
   }
 }
 
@@ -66,4 +119,87 @@ body {
   .container {
     max-width: 1140px;
   }
+}
+
+/* Ant Design */
+/* Dropdown */
+.ant-dropdown-menu-title-content {
+  color: #303030 !important;
+  font-family: "Lato", "sans-serif";
+  font-size: 16px;
+}
+
+/* Tabs */
+.ant-tabs-tab {
+  padding: 8px 0 !important;
+}
+
+.ant-tabs-tab .ant-tabs-tab-btn {
+  color: #303030 !important;
+  font-family: "Lato", "sans-serif";
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #aa1945 !important;
+}
+
+.ant-tabs-ink-bar {
+  background: #aa1945 !important;
+  height: 3px !important;
+}
+
+/* Carousel */
+.ant-carousel .animal-gallery,
+.animal-gallery .slick-slider,
+.animal-gallery .slick-list,
+.animal-gallery .slick-track,
+.animal-gallery .slick-slide > div:first-child,
+.animal-gallery .slick-slide > div:first-child > div:first-child {
+  height: 300px !important;
+}
+
+.animal-gallery .slick-dots.slick-dots-bottom {
+  background: rgba(170, 25, 69, 0.8);
+  padding: 8px;
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+  bottom: 0px;
+}
+
+.shelter-animals .slick-slide {
+  display: flex !important;
+  justify-content: center;
+}
+
+/* Select Field */
+.ant-select-selector {
+  padding: 4px 16px !important;
+  border: 0 !important;
+  border-radius: 0.75rem !important;
+  background: #fff !important;
+  color: #303030 !important;
+}
+
+.ant-select-selection-placeholder {
+  color: #303030 !important;
+  font-family: "Lato", "sans-serif";
+}
+
+.application-select .ant-select-selector {
+  background: #f9f1f0 !important;
+  border: 1px solid #aa1945 !important;
+}
+
+.ant-select-selection-item {
+  font-family: "Lato", "sans-serif";
+  font-size: 16px;
+}
+
+/* Image upload */
+.ant-upload,
+.ant-upload-list-item-container {
+  height: 200px !important;
+  width: 200px !important;
 }

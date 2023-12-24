@@ -31,7 +31,9 @@ class Breed(models.Model):
 
 class Animal(models.Model):
     name = models.CharField(max_length=255)
-    status = models.CharField(max_length=50, choices=AnimalStatus.choices)
+    status = models.CharField(
+        max_length=50, choices=AnimalStatus.choices, default=AnimalStatus.TO_BE_ADOPTED
+    )
     added_at = models.DateTimeField(auto_now_add=True)
     sex = models.CharField(max_length=15, choices=AnimalSex.choices)
     size = models.CharField(max_length=15, choices=AnimalSize.choices)
@@ -68,14 +70,13 @@ class Animal(models.Model):
     )
 
     class Meta:
-        ordering = ["id"]
+        ordering = ["-added_at"]
 
     def __str__(self):
         return f"{self.name}"
 
 
 class AnimalImage(models.Model):
-    name = models.CharField(max_length=255)
     animal = models.ForeignKey(
         to=Animal, on_delete=models.CASCADE, related_name="images"
     )
@@ -85,4 +86,4 @@ class AnimalImage(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.animal.name} {self.id}"

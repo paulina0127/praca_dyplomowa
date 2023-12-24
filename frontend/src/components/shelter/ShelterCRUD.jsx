@@ -5,7 +5,7 @@ import ShelterForm from "./ShelterForm";
 import { getShelter } from "../../features/shelter/shelterSlice";
 import { useEffect } from "react";
 
-export const ShelterCreate = ({ user }) => {
+export const ShelterCreate = () => {
   const initialValues = {
     name: "",
     nip: "",
@@ -20,35 +20,22 @@ export const ShelterCreate = ({ user }) => {
     image: null,
   };
 
-  return (
-    <ShelterForm user={user} initialValues={initialValues}>
-      <h2>Profil schroniska</h2>
-    </ShelterForm>
-  );
+  return <ShelterForm initialValues={initialValues} />;
 };
 
-export const ShelterUpdate = ({ user, shelterId }) => {
+export const ShelterUpdate = ({ shelterId }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getShelter(shelterId));
   }, []);
 
-  const { isLoading, shelter, errorGet } = useSelector(
-    (store) => store.shelter,
-  );
+  const { isLoading, shelter } = useSelector((store) => store.shelter);
 
   if (isLoading) return <Loader />;
   if (!shelter || Object.keys(shelter).length === 0) return null;
 
   const initialValues = shelter;
 
-  return (
-    <ShelterForm
-      shelterExists={true}
-      shelterId={shelterId}
-      user={user}
-      initialValues={initialValues}
-    />
-  );
+  return <ShelterForm shelterId={shelterId} initialValues={initialValues} />;
 };

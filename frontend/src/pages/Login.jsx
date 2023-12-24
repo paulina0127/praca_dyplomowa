@@ -33,24 +33,22 @@ const Login = () => {
           }}
         >
           {({ isValid }) => (
-            <>
-              <Form className="flex flex-col">
-                <TextField label="E-mail" name="email" type="email" />
-                <TextField label="Hasło" name="password" type="password" />
-                <div className="m-2 flex items-center gap-4">
-                  <button type="button" onClick={() => setOpenModal}>
-                    Nie pamiętam hasła
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn disabled:bg-cherry-disabled w-fit rounded-xl bg-cherry px-5 py-2 font-bold text-cream hover:bg-cherry-hover"
-                    disabled={!isValid}
-                  >
-                    {isLoading ? <Loader /> : "Zaloguj się"}
-                  </button>
-                </div>
-              </Form>
-            </>
+            <Form className="flex flex-col">
+              <TextField label="E-mail" name="email" type="email" />
+              <TextField label="Hasło" name="password" type="password" />
+              <div className="m-2 flex items-center gap-4">
+                <button type="button" onClick={() => setOpenModal(true)}>
+                  Nie pamiętam hasła
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isLoading | !isValid}
+                >
+                  {isLoading ? <Loader /> : "Zaloguj się"}
+                </button>
+              </div>
+            </Form>
           )}
         </Formik>
       </div>
@@ -61,7 +59,10 @@ const Login = () => {
           className="object-cover"
         />
       </div>
-      <ResetPasswordEmail open={openModal} />
+      <ResetPasswordEmail
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+      />
     </div>
   );
 };

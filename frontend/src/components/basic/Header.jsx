@@ -1,28 +1,14 @@
+import { Avatar, Dropdown, Menu } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
+import { IoIosArrowDown } from "react-icons/io";
 import { Link } from "react-router-dom";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { isAuthenticated } from "../../utils/auth";
 import { logout } from "../../features/user/userSlice";
-import { useState } from "react";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { isLoading, user } = useSelector((store) => store.user);
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const { user } = useSelector((store) => store.user);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -31,38 +17,58 @@ const Header = () => {
   const guestLinks = () => {
     return (
       <ul className="flex gap-3">
-        <li className="btn border-2 border-solid border-cherry bg-cherry text-cream">
+        <li className="btn btn-primary">
           <Link to="/logowanie">Zaloguj się</Link>
         </li>
-        <li className="btn border-2 border-solid border-cherry text-cherry">
+        <li className="btn btn-secondary">
           <Link to="/rejestracja">Zarejestruj się</Link>
         </li>
       </ul>
     );
   };
+
   const authLinks = () => {
     return (
-      <div>
-        <IconButton onClick={handleClick}>
-          <Avatar alt="user image" src={user?.profile?.image} />
-          <ArrowDropDownIcon />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem>
-            <Link to="/profil">Profil</Link>
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>Wyloguj się</MenuItem>
-        </Menu>
-      </div>
+      <Dropdown
+        overlay={
+          <Menu>
+            <Menu.Item key="profil">
+              <Link to="/profil">Profil</Link>
+            </Menu.Item>
+            <Menu.Item key="dodane zwierzęta">
+              <Link to="/dodane-zwierzęta">Dodane zwierzęta</Link>
+            </Menu.Item>
+            <Menu.Item key="aplikacje">
+              <Link to="/aplikacje">Aplikacje o adopcję</Link>
+            </Menu.Item>
+            <Menu.Item key="wyloguj" onClick={handleLogout}>
+              Wyloguj się
+            </Menu.Item>
+          </Menu>
+        }
+        trigger={["click"]}
+        className="h-full"
+        arrow
+      >
+        <div className="flex cursor-pointer items-center justify-center gap-2">
+          <Avatar
+            alt="user"
+            src={
+              user?.profile?.image
+                ? user?.profile?.image
+                : require("../../assets/user_placeholder.jpg")
+            }
+            size={50}
+            className="flex items-center justify-center bg-cherry-disabled"
+          />
+          <IoIosArrowDown size="20px" />
+        </div>
+      </Dropdown>
     );
   };
 
   return (
-    <header className="sticky left-0 top-0 flex h-[80px] w-full items-center bg-rosewater px-10 py-3">
+    <header className="sticky left-0 top-0 z-10 flex h-[80px] w-full items-center bg-rosewater px-10 py-3">
       <div className="container flex justify-between">
         <div className="flex items-center gap-5">
           <Link to="/">

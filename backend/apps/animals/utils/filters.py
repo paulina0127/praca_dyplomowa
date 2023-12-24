@@ -66,6 +66,7 @@ class AnimalFilter(FilterSet):
             "medical_needs",
             "activities",
             "city",
+            "shelter",
         ]
 
     def filter_size(self, queryset, name, value):

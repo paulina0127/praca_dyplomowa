@@ -1,9 +1,15 @@
 import ActivateAccount from "./ActivateAccount";
+import Animal from "./Animal";
 import Animals from "./Animals";
+import Application from "./Application";
+import Applications from "./Applications";
 import Home from "./Home";
 import Login from "./Login";
 import ResetPassword from "./ResetPassword";
-import ShelterPanel from './ShelterPanel';
+import Shelter from "./Shelter";
+import ShelterAnimal from "./ShelterAnimal";
+import ShelterAnimals from "./ShelterAnimals";
+import ShelterProfile from "./ShelterProfile";
 import Shelters from "./Shelters";
 import Signup from "./Signup";
 
@@ -15,5 +21,11 @@ export {
   ResetPassword,
   Animals,
   Shelters,
-  ShelterPanel,
+  ShelterProfile,
+  Animal,
+  Shelter,
+  Applications,
+  Application,
+  ShelterAnimals,
+  ShelterAnimal,
 };

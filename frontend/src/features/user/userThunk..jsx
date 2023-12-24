@@ -7,7 +7,9 @@ export const loadUserThunk = async (_, thunkAPI) => {
 
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue("Błąd pobierania konta użytkownika");
+      return thunkAPI.rejectWithValue(
+        "Wystąpił błąd podczas pobierania konta użytkownika",
+      );
     }
   } else {
     return;
@@ -22,7 +24,7 @@ export const loginThunk = async (values, thunkAPI) => {
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue("Błąd logowania");
+    return thunkAPI.rejectWithValue("Wystąpił błąd podczas logowania");
   }
 };
 
@@ -34,7 +36,7 @@ export const signupThunk = async (values, thunkAPI) => {
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue("Błąd rejestracji");
+    return thunkAPI.rejectWithValue("Wystąpił błąd podczas rejestracji");
   }
 };
 
@@ -46,7 +48,7 @@ export const activateAccountThunk = async (values, thunkAPI) => {
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue("Błąd aktywacji konta");
+    return thunkAPI.rejectWithValue("Wystąpił błąd podczas aktywacji konta");
   }
 };
 
@@ -59,7 +61,7 @@ export const resetPasswordThunk = async (values, thunkAPI) => {
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(
-      "Błąd wysyłania wiadomości z linkiem do resetowania hasła",
+      "Wystąpił błąd wysyłania wiadomości z linkiem do resetowania hasła",
     );
   }
 };
@@ -75,6 +77,46 @@ export const resetPasswordConfirmThunk = async (values, thunkAPI) => {
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue("Błąd tworzenia nowego hasła");
+    return thunkAPI.rejectWithValue("Wystąpił błąd podczas zmiany hasła");
+  }
+};
+
+export const changeEmailThunk = async (values, thunkAPI) => {
+  const body = JSON.stringify(values);
+
+  try {
+    const response = await api.post("/auth/users/set_email/", body);
+
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue("Wystąpił błąd podczas zmiany e-maila");
+  }
+};
+
+export const changePasswordThunk = async (values, thunkAPI) => {
+  const body = JSON.stringify(values);
+
+  try {
+    const response = await api.post("/auth/users/set_password/", body);
+
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue("Wystąpił błąd podczas zmiany hasła");
+  }
+};
+
+export const deleteAccountThunk = async (values, thunkAPI) => {
+  const body = JSON.stringify(values);
+
+  try {
+    const response = await api.delete("/auth/users/me/", body);
+
+    window.location.href = "/";
+    localStorage.removeItem("userTokens");
+    localStorage.removeItem("user");
+
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue("Wystąpił błąd podczas usuwania konta");
   }
 };

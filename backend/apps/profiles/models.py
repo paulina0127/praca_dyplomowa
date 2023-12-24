@@ -13,7 +13,7 @@ User = get_user_model()
 class Shelter(models.Model):
     name = models.CharField(max_length=255)
     nip = models.CharField(max_length=10, unique=True)
-    krs = models.CharField(max_length=15, unique=True)
+    krs = models.CharField(max_length=15, unique=True, blank=True)
     email = models.EmailField(blank=True)
     phone_number = PhoneNumberField()
     website = models.URLField(blank=True)
@@ -22,7 +22,7 @@ class Shelter(models.Model):
     city = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="shelters/images", blank=True, null=True)
-    account = models.OneToOneField(
+    user = models.OneToOneField(
         to=User,
         related_name="shelter",
         on_delete=models.CASCADE,

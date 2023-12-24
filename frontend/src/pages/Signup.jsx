@@ -44,11 +44,10 @@ const Signup = () => {
                 <div className="m-2 flex flex-col items-center">
                   <button
                     type="submit"
-                    className="btn disabled:bg-cherry-disabled w-fit rounded-xl bg-cherry px-5 py-2 font-bold text-cream hover:bg-cherry-hover"
-                    disabled={!isValid}
+                    className="btn disabled:bg-cherry-disabledd bg-cherry font-bold text-cream hover:bg-cherry-hover"
+                    disabled={isLoading | !isValid}
                   >
                     {isLoading ? <Loader /> : "Zarejestruj się"}
-                    {console.log(isLoading)}
                   </button>
                 </div>
               </Form>

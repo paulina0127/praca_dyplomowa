@@ -1,174 +1,213 @@
-import { Field, FieldArray, Form, Formik } from "formik";
-import { FileField, TextField } from "..";
+import { Avatar, Modal, Tabs } from "antd";
+import {
+  ChangeEmailForm,
+  ChangePasswordForm,
+  DeleteAccountForm,
+} from "../auth/AccountCRUD";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import { FileField, TextArea, TextField } from "..";
+import { Form, Formik } from "formik";
 import {
   createShelter,
+  deleteShelter,
   updateShelter,
 } from "../../features/shelter/shelterSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import { BsPersonCheck } from "react-icons/bs";
-import { FaPlus } from "react-icons/fa";
-import { HiOutlineTrash } from "react-icons/hi";
-import { Link } from "react-router-dom";
 import { Loader } from "..";
-import { MdOutlineAdd } from "react-icons/md";
 import { useState } from "react";
 import { validateShelter } from "../../validators";
 
-const ShelterForm = ({
-  initialValues,
-  shelterExists,
-  shelterId,
-  user,
-  children,
-}) => {
+const ShelterForm = ({ initialValues, shelterId }) => {
   const dispatch = useDispatch();
 
-  const { isLoading, successCreate, errorCreate, successUpdate, errorUpdate } =
-    useSelector((store) => store.shelter);
+  const { isLoading } = useSelector((store) => store.shelter);
+
+  const { TabPane } = Tabs;
+
+  const [openModal, setOpenModal] = useState(false);
 
   return (
-    <>
-      {isLoading && <Loader />}
-      {/* {successUpdate && (
-        <Message variant="success">Pomyślnie zapisano zmiany.</Message>
-      )}
-      {successCreate && (
-        <Message variant="success">Pomyślnie utworzono kartę pacjenta.</Message>
-      )}
-      {errorShelterUpdate && (
-        <Message variant="danger">{errorShelterUpdate}</Message>
-      )}
-      {errorShelterCreate && (
-        <Message variant="danger">{errorShelterCreate}</Message>
-      )} */}
-
-      <div className="container-bg-content">
-        {children}
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validateShelter}
-          onSubmit={(values) => {
-            if (shelterExists) {
-              const updatedValues = {};
-              for (const key in values) {
-                if (values[key] !== initialValues[key]) {
-                  updatedValues[key] = values[key];
+    <div className="container rounded-3xl bg-black/[0.04] p-8">
+      <Tabs defaultActiveKey="1" size="large">
+        <TabPane tab="Profil" key="1">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validateShelter}
+            onSubmit={(values) => {
+              if (shelterId) {
+                const updatedValues = {};
+                for (const key in values) {
+                  if (values[key] !== initialValues[key]) {
+                    updatedValues[key] = values[key];
+                  }
                 }
+                dispatch(
+                  updateShelter({ id: shelterId, values: updatedValues }),
+                );
+              } else {
+                dispatch(createShelter(values));
               }
-              dispatch(updateShelter(shelterId, updatedValues));
-            } else {
-              dispatch(createShelter(values));
-            }
-          }}
-        >
-          {({ values, isValid }) => (
-            <>
-              {console.log(values)}
-              <Form id="form" encType="multipart/form-data">
-                <div>
-                  <div>
-                    <div>
-                      <img
-                        src={
-                          values?.image !== initialValues?.image &&
-                          values?.image instanceof File
-                            ? URL.createObjectURL(values?.image)
-                            : values?.image
-                              ? values?.image
-                              : require("../../assets/animal_placeholder.png")
-                        }
-                        alt=""
-                        style={{ objectFit: "cover", borderRadius: "50%" }}
-                      />
-                      <label htmlFor="image">
-                        <div>
-                          <FaPlus color="#fff" />
-                        </div>
-                      </label>
-                      <FileField
-                        name="image"
-                        type="file"
-                        accept="image/png, image/jpeg"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3>Dane osobowe</h3>
-                    <div className="twoColumnGrid">
-                      <div className="formGroup">
-                        <h4>
-                          Nazwa <span className="form-required">*</span>
-                        </h4>
-                        <TextField name="name" type="text" />
-                      </div>
-                      <div className="formGroup">
-                        <h4>E-mail</h4>
-                        <TextField name="email" type="email" />
-                      </div>
-
-                      <div className="formGroup">
-                        <h4>Telefon</h4>
-                        <TextField name="phone_number" type="text" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3>Adres zamieszkania</h3>
-                    <div className="formGroup">
-                      <h4>
-                        Ulica <span className="form-required">*</span>
-                      </h4>
-                      <TextField name="street" type="text" />
-                    </div>
-
-                    <div className="formGroup">
-                      <h4>
-                        Kod pocztowy <span className="form-required">*</span>
-                      </h4>
-                      <TextField name="postal_code" type="text" maxLength="6" />
-                    </div>
-
-                    <div className="formGroup">
-                      <h4>
-                        Miejscowość <span className="form-required">*</span>
-                      </h4>
-                      <TextField name="city" type="text" />
-                    </div>
-                  </div>
-                </div>
-              </Form>
-            </>
-          )}
-        </Formik>
-
-        {!shelterExists && user?.type === "Pacjent" ? (
-          <div className="btnGroup" style={{ justifySelf: "end" }}>
-            <button
-              type="submit"
-              className="btn bg-blue clr-white mx-4 mt-3"
-              style={{ justifySelf: "end" }}
-              form="form"
-              disabled={isLoading}
-            >
-              "Zapisz"
-            </button>
-          </div>
-        ) : (
-          <button
-            type="submit"
-            className="btn bg-dark-blue clr-white mx-4 mt-3"
-            style={{ justifySelf: "end" }}
-            form="form"
-            disabled={isLoading}
+            }}
           >
-            "Zapisz"
-          </button>
-        )}
-      </div>
-    </>
+            {({ values, isValid }) => (
+
+                <Form id="form" encType="multipart/form-data">
+                  <div className="grid grid-cols-3 gap-8">
+                    <div className="flex items-center justify-center">
+                      <div className="relative flex h-[250px] w-[250px] justify-center rounded-[50%] border-2 border-solid border-cherry bg-rosewater">
+                        <Avatar
+                          alt="user"
+                          src={
+                            values?.image !== initialValues?.image &&
+                            values?.image instanceof File
+                              ? URL.createObjectURL(values?.image)
+                              : values?.image
+                                ? values?.image
+                                : require("../../assets/user_placeholder.jpg")
+                          }
+                          className="flex h-full w-full items-center justify-center bg-cherry-disabled"
+                        />
+                        <label htmlFor="image">
+                          <div className="absolute left-[5%] top-0 cursor-pointer rounded-xl bg-cherry p-2">
+                            <FaPlus className="text-cream" size="24px" />
+                          </div>
+                        </label>
+                        <FileField
+                          name="image"
+                          type="file"
+                          accept="image/png, image/jpeg"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-2xl font-bold text-black">
+                        Lokalizacja
+                      </h3>
+                      <TextField
+                        name="street_address"
+                        type="text"
+                        label="Ulica*"
+                      />
+                      <TextField
+                        name="postal_code"
+                        type="text"
+                        maxLength="6"
+                        label="Kod pocztowy*"
+                      />
+                      <TextField name="city" type="text" label="Miasto*" />
+                    </div>
+
+                    <div>
+                      <h3 className="text-2xl font-bold text-black">Kontakt</h3>
+                      <div>
+                        <TextField name="email" type="email" label="E-mail" />
+                        <TextField
+                          name="phone_number"
+                          type="text"
+                          label="Numer telefonu*"
+                        />
+                        <TextField
+                          name="website"
+                          type="url"
+                          label="Strona internetowa"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-2xl font-bold text-black">
+                        Dane schroniska
+                      </h3>
+                      <div>
+                        <TextField name="name" type="text" label="Nazwa*" />
+                        <TextField name="nip" type="text" label="NIP*" />
+                        <TextField name="krs" type="text" label="KRS" />
+                      </div>
+                    </div>
+
+                    <div className="col-span-2">
+                      <h3 className="text-2xl font-bold text-black">Opis</h3>
+                      <TextArea name="description" />
+                    </div>
+
+                    <div className="col-span-3 flex">
+                      <p className="font-sans text-lg text-cherry">
+                        * - pola obowiązkowe
+                      </p>
+                    </div>
+
+                    <div className="col-span-3 mt-2 flex justify-evenly">
+                      {shelterId && (
+                        <>
+                          <button
+                            type="button"
+                            className="btn btn-secondary justify-self-start"
+                            onClick={() => setOpenModal(true)}
+                          >
+                            Usuń profil
+                          </button>
+                          <Modal
+                            open={openModal}
+                            onCancel={() => setOpenModal(false)}
+                            className="font-sans"
+                            footer={null}
+                            centered
+                          >
+                            <div className="mb-2 flex items-center gap-2 text-cherry">
+                              <h1 className="text-3xl font-bold">
+                                Potwierdź usunięcie profilu
+                              </h1>
+                              <FaTrash size="32px" />
+                            </div>
+
+                            <div className="my-4">
+                              <p className="font-sans text-black">
+                                Usunięcia profilu nie można cofnąć
+                              </p>
+                            </div>
+
+                            <div className="mt-2 flex justify-center">
+                              <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={() =>
+                                  dispatch(deleteShelter(shelterId))
+                                }
+                                disabled={isLoading}
+                              >
+                                {isLoading ? <Loader /> : "Usuń"}
+                              </button>
+                            </div>
+                          </Modal>
+                        </>
+                      )}
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        form="form"
+                        disabled={isLoading || !isValid}
+                      >
+                        {isLoading ? <Loader /> : "Zapisz"}
+                      </button>
+                    </div>
+                  </div>
+                </Form>
+            )}
+          </Formik>
+        </TabPane>
+        <TabPane tab="Konto" key="2">
+          <div className="flex flex-col">
+            <div className="grid grid-cols-2">
+              <ChangeEmailForm />
+              <ChangePasswordForm />
+            </div>
+            <DeleteAccountForm />
+          </div>
+        </TabPane>
+      </Tabs>
+    </div>
   );
 };
 

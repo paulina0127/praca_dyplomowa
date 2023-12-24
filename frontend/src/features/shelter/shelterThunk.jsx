@@ -8,31 +8,37 @@ export const getShelterThunk = async (id, thunkAPI) => {
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error?.response?.data);
   }
 };
 
 export const createShelterThunk = async (values, thunkAPI) => {
-  const body = JSON.stringify(values);
+  const config = {
+    headers: { ...api.defaults.headers, "Content-Type": "multipart/form-data" },
+  };
+
   try {
-    const response = await api.post(`/shelters`, body);
+    const response = await api.post(`/shelters`, values, config);
     thunkAPI.dispatch(clearShelterState());
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error?.response?.data);
   }
 };
 
-export const updateShelterThunk = async (id, values, thunkAPI) => {
-  const body = JSON.stringify(values);
+export const updateShelterThunk = async ({ id, values }, thunkAPI) => {
+  const config = {
+    headers: { ...api.defaults.headers, "Content-Type": "multipart/form-data" },
+  };
+
   try {
-    const response = await api.patch(`/shelters/${id}`, body);
+    const response = await api.patch(`/shelters/${id}`, values, config);
     thunkAPI.dispatch(clearShelterState());
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error?.response?.data);
   }
 };
 
@@ -43,7 +49,7 @@ export const deleteShelterThunk = async (id, thunkAPI) => {
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error?.response?.data);
   }
 };
 
@@ -54,6 +60,6 @@ export const listSheltersThunk = async (_, thunkAPI) => {
 
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error?.response?.data);
   }
 };

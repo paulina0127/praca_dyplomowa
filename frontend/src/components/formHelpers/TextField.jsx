@@ -9,7 +9,7 @@ const TextField = ({ label, classes, ...props }) => {
       </label>
 
       <input
-        className={`w-full rounded-xl px-4 py-1 font-sans ${classes} ${
+        className={`w-full rounded-xl px-4 py-1 font-sans text-base ${classes} ${
           meta.touched && meta.error && "is-invalid"
         }`}
         {...field}

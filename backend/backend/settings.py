@@ -112,6 +112,7 @@ LANGUAGE_CODE = "pl"
 TIME_ZONE = "CET"
 USE_I18N = True
 USE_TZ = True
+PHONENUMBER_DEFAULT_REGION = "PL"
 
 # Static files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")

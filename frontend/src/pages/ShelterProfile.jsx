@@ -3,21 +3,20 @@ import {
   ShelterUpdate,
 } from "../components/shelter/ShelterCRUD";
 
-import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const ShelterPanel = ({ type }) => {
+const ShelterProfile = () => {
   const { user } = useSelector((store) => store.user);
 
   return (
-    <section className="container">
+    <section className="section">
       {user?.profile ? (
-        <ShelterUpdate user={user} shelterId={user?.profile?.id} />
+        <ShelterUpdate shelterId={user?.profile?.id} />
       ) : (
-        <ShelterCreate user={user} />
+        <ShelterCreate />
       )}
     </section>
   );
 };
 
-export default ShelterPanel;
+export default ShelterProfile;

@@ -23,4 +23,4 @@ class AnimalAdmin(admin.ModelAdmin):
 
 @admin.register(AnimalImage)
 class AnimalImageAdmin(admin.ModelAdmin):
-    list_display = ["id", "name"]
+    list_display = ["id"]

@@ -28,7 +28,7 @@ class AnimalShelterSerializer(serializers.ModelSerializer):
 class AnimalImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = AnimalImage
-        fields = ["name", "image"]
+        exclude = ["animal"]
 
 
 class BreedSerializer(serializers.ModelSerializer):
@@ -52,14 +52,4 @@ class CreateAnimalSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Animal
-        fields = "__all__"
-
-    def create(self, validated_data):
-        images_data = validated_data.pop("images", [])
-
-        animal = Animal.objects.create(**validated_data)
-
-        for image_data in images_data:
-            AnimalImage.objects.create(animal=animal, **image_data)
-
-        return animal
+        exclude = ["shelter"]

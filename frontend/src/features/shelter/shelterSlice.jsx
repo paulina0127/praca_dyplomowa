@@ -11,16 +11,6 @@ import { toast } from "react-toastify";
 
 const initialState = {
   isLoading: false,
-  successGet: false,
-  errorGet: "",
-  successCreate: false,
-  errorCreate: "",
-  successUpdate: false,
-  errorUpdate: "",
-  successDelete: false,
-  errorDelete: "",
-  successList: false,
-  errorList: "",
   shelters: [],
   count: 0,
   shelter: {},
@@ -55,14 +45,11 @@ const shelterSlice = createSlice({
       })
       .addCase(getShelter.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successGet = true;
         state.shelter = payload;
       })
       .addCase(getShelter.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successGet = false;
-        state.errorGet = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas pobierania danych schroniska");
       })
 
       // Create
@@ -71,14 +58,13 @@ const shelterSlice = createSlice({
       })
       .addCase(createShelter.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successCreate = true;
         state.shelter = payload;
+        toast.success("Pomyślnie utworzono profil schroniska");
+        window.location.reload();
       })
       .addCase(createShelter.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successCreate = false;
-        state.errorCreate = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas tworzenia profilu schroniska");
       })
 
       // Update
@@ -87,14 +73,12 @@ const shelterSlice = createSlice({
       })
       .addCase(updateShelter.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successUpdate = true;
         state.shelter = payload;
+        toast.success("Pomyślnie zapisano zmiany");
       })
       .addCase(updateShelter.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successUpdate = false;
-        state.errorUpdate = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas aktualizowania profilu schroniska");
       })
 
       // Delete
@@ -103,13 +87,12 @@ const shelterSlice = createSlice({
       })
       .addCase(deleteShelter.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successDelete = true;
+        state.shelter = {};
+        window.location.reload();
       })
       .addCase(deleteShelter.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successDelete = false;
-        state.errorDelete = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas usuwania profilu schroniska");
       })
 
       // List
@@ -118,15 +101,12 @@ const shelterSlice = createSlice({
       })
       .addCase(listShelters.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.successList = true;
         state.shelters = payload.results;
         state.count = payload.count;
       })
       .addCase(listShelters.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.successList = false;
-        state.errorList = payload;
-        toast.error(payload);
+        toast.error("Wystąpił błąd podczas pobierania listy schronisk");
       });
   },
 });
