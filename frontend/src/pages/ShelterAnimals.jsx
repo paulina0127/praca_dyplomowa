@@ -6,6 +6,7 @@ import {
   TextField,
 } from "../components";
 import { Field, Form, Formik } from "formik";
+import { Modal, Tooltip } from "antd";
 import { getOrdering, setSelectField } from "../utils/functions";
 import {
   orderingOptions,
@@ -17,7 +18,6 @@ import { useEffect, useState } from "react";
 
 import { FaFilter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { Modal } from "antd";
 import React from "react";
 import { listAnimals } from "../features/animal/animalSlice";
 
@@ -85,9 +85,25 @@ const ShelterAnimals = () => {
                 </div>
               </button>
             </div>
-            <Link to="/dodane-zwierzęta/nowe" className="btn btn-primary ">
-              Dodaj nowe
-            </Link>
+
+            <Tooltip
+              placement="topLeft"
+              title={
+                !user?.profile
+                  ? "Utwórz profil schroniska by dodać nowe zwierzę"
+                  : null
+              }
+            >
+              <Link to="/dodane-zwierzęta/nowe">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  disabled={!user?.profile}
+                >
+                  Dodaj nowe
+                </button>
+              </Link>
+            </Tooltip>
           </div>
 
           {isLoading ? (

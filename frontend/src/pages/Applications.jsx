@@ -51,7 +51,9 @@ const Applications = () => {
   };
 
   useEffect(() => {
-    dispatch(listApplications(params));
+    if (user.profile) {
+      dispatch(listApplications(params));
+    }
   }, [params]);
 
   useEffect(() => {
