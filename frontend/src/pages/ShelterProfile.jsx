@@ -3,6 +3,7 @@ import {
   ShelterUpdate,
 } from "../components/shelter/ShelterCRUD";
 
+import React from "react";
 import { useSelector } from "react-redux";
 
 const ShelterProfile = () => {

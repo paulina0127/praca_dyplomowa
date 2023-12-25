@@ -1,18 +1,22 @@
 """Views for Applications app."""
 
+# Django
+from django.core.mail import send_mail
+
 # Third-party
-from rest_framework import generics, status
+from rest_framework import generics
+from rest_framework import status
+from rest_framework.response import Response
 
 # Project
 from apps.users.utils.choices import UserRole
 
 # Local
 from .models import Application
-from .utils.permissions import ApplicationBaseAccess
-from .utils.serializers import ApplicationSerializer, CreateApplicationSerializer
-from rest_framework.response import Response
-from django.core.mail import send_mail
 from .utils.choices import ApplicationStatus
+from .utils.permissions import ApplicationBaseAccess
+from .utils.serializers import ApplicationSerializer
+from .utils.serializers import CreateApplicationSerializer
 
 
 class ApplicationList(generics.ListCreateAPIView):
@@ -33,7 +37,7 @@ class ApplicationList(generics.ListCreateAPIView):
             return Application.objects.all()
 
     def get_serializer_class(self):
-        # Return serializer for creating animals
+        # Return serializer for creating / updating animals
         if self.request.method in ["POST", "PUT", "PATCH"]:
             return CreateApplicationSerializer
         else:

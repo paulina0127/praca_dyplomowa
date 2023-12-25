@@ -2,6 +2,7 @@ import { AnimalCard, Loader } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
+import React from "react";
 import { listAnimals } from "../features/animal/animalSlice";
 import { useEffect } from "react";
 
@@ -40,8 +41,8 @@ const Home = () => {
           ) : animals.length > 0 ? (
             <>
               <div className="my-8 grid grid-cols-3 justify-items-center gap-8">
-                {animals?.slice(0, 9).map((animal, index) => (
-                  <AnimalCard animal={animal} />
+                {animals?.slice(0, 9).map((animal) => (
+                  <AnimalCard animal={animal} key={animal.id} />
                 ))}
               </div>
               <div className="flex justify-center">
@@ -51,7 +52,9 @@ const Home = () => {
               </div>
             </>
           ) : (
-            <p className="my-2 text-center">Brak wyników do wyświetlenia</p>
+            <p className="my-8 h-fit text-center text-lg text-cherry">
+              Brak wyników do wyświetlenia
+            </p>
           )}
         </div>
       </section>

@@ -12,6 +12,8 @@ import {
   validateDeleteAccount,
 } from "../../validators";
 
+import React from "react";
+
 export const ChangeEmailForm = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((store) => store.user);
@@ -31,7 +33,7 @@ export const ChangeEmailForm = () => {
         resetForm({ values: "" });
       }}
     >
-      {({ values, isValid }) => (
+      {({ isValid }) => (
         <Form>
           <h3 className="text-2xl font-bold text-black">Zmień e-mail</h3>
           <div className="p-5 pt-2">
@@ -86,7 +88,7 @@ export const ChangePasswordForm = () => {
         resetForm({ values: "" });
       }}
     >
-      {({ values, isValid }) => (
+      {({ isValid }) => (
         <Form>
           <h3 className="text-2xl font-bold text-black">Zmień hasło</h3>
           <div className="p-5 pt-2">
@@ -133,7 +135,7 @@ export const DeleteAccountForm = () => {
         resetForm({ values: "" });
       }}
     >
-      {({ values, isValid }) => (
+      {({ isValid }) => (
         <Form>
           <h3 className="text-2xl font-bold text-black">Usuń konto</h3>
           <div className="grid w-full grid-cols-2 items-center">

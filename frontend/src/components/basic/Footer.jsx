@@ -1,3 +1,5 @@
+import React from "react";
+
 const Footer = () => {
   return (
     <footer className="sticky left-0 top-0 w-full bg-rosewater px-10 py-5">

@@ -1,5 +1,6 @@
 import { AnimalCreate, AnimalUpdate } from "../components/animal/AnimalCRUD";
 
+import React from "react";
 import { useParams } from "react-router-dom";
 
 const ShelterAnimal = ({ type }) => {

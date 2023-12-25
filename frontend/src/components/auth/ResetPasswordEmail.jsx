@@ -4,6 +4,7 @@ import { Loader, TextField } from "..";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Modal } from "antd";
+import React from "react";
 import { resetPassword } from "../../features/user/userSlice";
 import { validateResetPassword } from "../../validators";
 
@@ -62,7 +63,7 @@ const ResetPasswordEmail = ({ open, onClose }) => {
               successResetPassword && resetForm({ values: "" });
             }}
           >
-            {({ values, isValid }) => (
+            {({ isValid }) => (
               <Form id="form">
                 <TextField
                   name="email"
@@ -73,6 +74,7 @@ const ResetPasswordEmail = ({ open, onClose }) => {
                   <button
                     type="submit"
                     className="btn btn-primary"
+                    disabled={isLoading || !isValid}
                   >
                     {isLoading ? <Loader /> : "Wyślij"}
                   </button>

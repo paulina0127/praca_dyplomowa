@@ -1,6 +1,7 @@
 """Models for Applications app."""
 
 # Django
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 # Third-party
@@ -8,12 +9,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 # Project
 from apps.animals.models import Animal
+from apps.animals.utils.choices import AnimalSpecies
 
 # Local
 from .utils.choices import ApplicationStatus
-from django.contrib.postgres.fields import ArrayField
-
-from apps.animals.utils.choices import AnimalSpecies
 
 
 class Application(models.Model):

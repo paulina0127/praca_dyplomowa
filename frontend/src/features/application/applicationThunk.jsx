@@ -49,9 +49,26 @@ export const deleteApplicationThunk = async (id, thunkAPI) => {
   }
 };
 
-export const listApplicationsThunk = async (_, thunkAPI) => {
+export const listApplicationsThunk = async (filters, thunkAPI) => {
+  let query = "?";
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((val) => {
+        if (val !== "") {
+          query += `${key}=${val}&`;
+        }
+      });
+    } else if (value !== "") {
+      query += `${key}=${value}&`;
+    }
+  });
+
+  // Remove the trailing '&' character from the query string
+  query = query.slice(0, -1);
+
   try {
-    const response = await api.get(`/applications`);
+    const response = await api.get(`/applications${query}`);
     thunkAPI.dispatch(clearApplicationState());
 
     return response.data;

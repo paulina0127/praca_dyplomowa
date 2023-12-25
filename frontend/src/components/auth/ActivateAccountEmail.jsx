@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { BsSendCheck } from "react-icons/bs";
 import { Modal } from "antd";
+import React from "react";
 
 const ActivateAccountEmail = ({ open, email }) => {
   const [openModal, setOpenModal] = useState(false);

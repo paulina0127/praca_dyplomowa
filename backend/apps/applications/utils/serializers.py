@@ -3,9 +3,12 @@
 # Third-party
 from rest_framework import serializers
 
+# Project
+from apps.animals.models import Animal
+from apps.animals.models import AnimalImage
+
 # Local
 from ..models import Application
-from apps.animals.models import Animal, AnimalImage
 from ..utils.choices import ApplicationStatus
 
 

@@ -3,11 +3,13 @@
 # Third-party
 from rest_framework import generics
 
+# Project
+from apps.users.utils.choices import UserRole
+
 # Local
 from .models import Shelter
 from .utils.permissions import ShelterBaseAccess
 from .utils.serializers import ShelterSerializer
-from apps.users.utils.choices import UserRole
 
 
 class ShelterList(generics.ListCreateAPIView):

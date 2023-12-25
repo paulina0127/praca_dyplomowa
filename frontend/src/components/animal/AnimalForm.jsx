@@ -20,6 +20,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
+import React from "react";
+import { setSelectField } from "../../utils/functions";
 import validateAnimal from "../../validators/validateAnimal";
 
 const AnimalForm = ({ initialValues, animalId, breeds }) => {
@@ -41,10 +43,6 @@ const AnimalForm = ({ initialValues, animalId, breeds }) => {
       url: item.image,
     })),
   );
-
-  const setSelectField = (value) => {
-    return { value: value, label: value };
-  };
 
   const getBreed = (value) => {
     return breedOptions.find((option) => option.value === value);
@@ -154,7 +152,7 @@ const AnimalForm = ({ initialValues, animalId, breeds }) => {
                       value={values?.size ? setSelectField(values?.size) : null}
                       component={SelectField}
                       options={sizeOptions}
-                      placeholder="Wybierz rozmiar"
+                      placeholder="Wybierz wielkość"
                       onChange={(value) => {
                         setFieldValue("size", value);
                       }}

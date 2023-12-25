@@ -8,6 +8,7 @@ import { Carousel } from "antd";
 import { CgWebsite } from "react-icons/cg";
 import { Loader } from "../components";
 import { MdOutlineEmail } from "react-icons/md";
+import React from "react";
 import { getShelter } from "../features/shelter/shelterSlice";
 import { listAnimals } from "../features/animal/animalSlice";
 
@@ -69,7 +70,7 @@ const Shelter = () => {
               className="shelter-animals max-w-[1000px]"
               ref={carouselRef}
             >
-              {animals?.slice(0, 9).map((animal, index) => (
+              {animals?.slice(0, 9).map((animal) => (
                 <CarouselCard key={animal?.id} animal={animal} />
               ))}
             </Carousel>
@@ -140,7 +141,7 @@ const Shelter = () => {
                   <div className="rounded-xl bg-rose p-2">
                     <CgWebsite />
                   </div>
-                  {shelter?.website}
+                  <Link to={shelter?.website}>{shelter?.website}</Link>
                 </div>
               )}
             </div>

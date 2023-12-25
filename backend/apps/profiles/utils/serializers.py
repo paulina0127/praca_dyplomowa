@@ -1,13 +1,13 @@
 """Serializers for Profiles app."""
 
+# Standard Library
+import re
+
 # Third-party
 from rest_framework import serializers
 
 # Local
 from ..models import Shelter
-import re
-
-import requests
 
 
 class ShelterSerializer(serializers.ModelSerializer):

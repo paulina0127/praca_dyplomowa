@@ -5,6 +5,7 @@ import { BsPersonCheck } from "react-icons/bs";
 import { Home } from ".";
 import { Loader } from "../components";
 import { Modal } from "antd";
+import React from "react";
 import { activateAccount } from "../features/user/userSlice";
 
 const ActivateAccount = () => {

@@ -6,7 +6,8 @@ from django.urls import path
 # Local
 from .views import AnimalDetail
 from .views import AnimalList
-from .views import BreedList, BreedDetail
+from .views import BreedDetail
+from .views import BreedList
 
 urlpatterns = [
     path("breeds", BreedList.as_view(), name=BreedList.name),

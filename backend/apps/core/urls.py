@@ -1,7 +1,9 @@
 """Urls for Core app."""
 
+# Django
 from django.urls import path
 
+# Local
 from .views import serve_image
 
 urlpatterns = [

@@ -9,6 +9,7 @@ import { ApplicationCreate } from "../components/application/ApplicationCRUD";
 import { IoIosResize } from "react-icons/io";
 import { Loader } from "../components";
 import { PiSyringe } from "react-icons/pi";
+import React from "react";
 import { getAnimal } from "../features/animal/animalSlice";
 
 const Animal = () => {

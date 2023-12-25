@@ -1,5 +1,7 @@
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
+import React from "react";
+
 const Pagination = ({ page, pageSize, count, clickBack, clickForward }) => {
   const pages = Math.ceil(count / pageSize);
 
@@ -11,7 +13,7 @@ const Pagination = ({ page, pageSize, count, clickBack, clickForward }) => {
           type="button"
           onClick={clickBack}
           disabled={page === 1}
-          className="disabled:bg-cherry-disabled cursor-pointer rounded-xl bg-cherry p-2 text-cream hover:bg-cherry-hover disabled:cursor-not-allowed"
+          className="cursor-pointer rounded-xl bg-cherry p-2 text-cream hover:bg-cherry-hover disabled:cursor-not-allowed disabled:bg-cherry-disabled"
         >
           <AiOutlineArrowLeft size="1.5rem" />
         </button>
@@ -22,7 +24,7 @@ const Pagination = ({ page, pageSize, count, clickBack, clickForward }) => {
           type="button"
           onClick={clickForward}
           disabled={page === pages}
-          className="disabled:bg-cherry-disabled cursor-pointer rounded-xl bg-cherry p-2 text-cream hover:bg-cherry-hover disabled:cursor-not-allowed"
+          className="cursor-pointer rounded-xl bg-cherry p-2 text-cream hover:bg-cherry-hover disabled:cursor-not-allowed disabled:bg-cherry-disabled"
         >
           <AiOutlineArrowRight size="1.5rem" />
         </button>

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { IoIosArrowDown } from "react-icons/io";
 import { Link } from "react-router-dom";
+import React from "react";
 import { isAuthenticated } from "../../utils/auth";
 import { logout } from "../../features/user/userSlice";
 
@@ -59,7 +60,7 @@ const Header = () => {
                 : require("../../assets/user_placeholder.jpg")
             }
             size={50}
-            className="flex items-center justify-center bg-cherry-disabled"
+            className="flex items-center justify-center"
           />
           <IoIosArrowDown size="20px" />
         </div>

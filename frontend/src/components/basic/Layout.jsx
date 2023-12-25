@@ -1,5 +1,6 @@
 import { Footer, Header } from "..";
 
+import React from "react";
 import { loadUser } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";

@@ -62,3 +62,10 @@ export const activitiesOptions = [
   { value: "Szkolenie", label: "Szkolenie" },
   { value: "Pieszczoty", label: "Pieszczoty" },
 ];
+
+export const orderingOptions = [
+  { value: "id", label: "Id (rosnąco)" },
+  { value: "-id", label: "Id (malejąco)" },
+  { value: "added_at", label: "Data dodania (rosnąco)" },
+  { value: "-added_at", label: "Data dodania (malejąco)" },
+];

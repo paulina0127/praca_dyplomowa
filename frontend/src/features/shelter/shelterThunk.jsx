@@ -53,9 +53,26 @@ export const deleteShelterThunk = async (id, thunkAPI) => {
   }
 };
 
-export const listSheltersThunk = async (_, thunkAPI) => {
+export const listSheltersThunk = async (filters, thunkAPI) => {
+  let query = "?";
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((val) => {
+        if (val !== "") {
+          query += `${key}=${val}&`;
+        }
+      });
+    } else if (value !== "") {
+      query += `${key}=${value}&`;
+    }
+  });
+
+  // Remove the trailing '&' character from the query string
+  query = query.slice(0, -1);
+
   try {
-    const response = await api.get(`/shelters`);
+    const response = await api.get(`/shelters${query}`);
     thunkAPI.dispatch(clearShelterState());
 
     return response.data;

@@ -2,14 +2,14 @@ import { ErrorMessage, useField } from "formik";
 
 import React from "react";
 
-const BooleanField = ({ label, notReq, ...props }) => {
-  const [field, meta, { setTouched }] = useField(props?.field.name);
+const BooleanField = ({ label, ...props }) => {
+  const [field, { setTouched }] = useField(props?.field.name);
 
   return (
     <div className="mb-1 flex flex-col">
       <label className="m-2 font-sans text-lg">{label}</label>
       <div className="mx-4 flex gap-4 font-sans text-base">
-        <label>
+        <label htmlFor={field.name}>
           <div className="flex gap-1">
             <input
               type="radio"
@@ -25,7 +25,7 @@ const BooleanField = ({ label, notReq, ...props }) => {
             <p>Tak</p>
           </div>
         </label>
-        <label>
+        <label htmlFor={field.name}>
           <div className="flex gap-1">
             <input
               type="radio"

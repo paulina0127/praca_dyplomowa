@@ -1,4 +1,3 @@
-import { FaInfoCircle, FaPaw, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { Modal, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import { MdChildCare } from "react-icons/md";
 import { MdOutlineEmail } from "react-icons/md";
 import { MdOutlineMedicalServices } from "react-icons/md";
 import { MdOutlineSportsFootball } from "react-icons/md";
+import React from "react";
 import { getApplication } from "../features/application/applicationSlice";
 import { updateApplication } from "../features/application/applicationSlice";
 
@@ -94,7 +94,7 @@ const Application = () => {
                         <IoPawOutline />
                       </div>
                       {application?.has_animals?.length > 0
-                        ? application?.has_animals
+                        ? application?.has_animals.join(", ")
                         : "Nie"}
                     </div>
                   </Tooltip>

@@ -60,7 +60,7 @@ const animalSlice = createSlice({
         state.isLoading = false;
         state.animal = payload;
         toast.success("Pomyślnie utworzono profil zwierzęcia");
-        // window.location.href = "/dodane-zwierzęta";
+        window.location.href = "/dodane-zwierzęta";
       })
       .addCase(createAnimal.rejected, (state, { payload }) => {
         state.isLoading = false;

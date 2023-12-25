@@ -1,19 +1,26 @@
 """Views for Animals app."""
 
+# Django
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 # Third-party
-from rest_framework import generics, status
+from rest_framework import generics
+from rest_framework import status
 from rest_framework.response import Response
 
+# Project
+from apps.users.utils.choices import UserRole
+
 # Local
-from .models import Animal, AnimalImage
+from .models import Animal
+from .models import AnimalImage
 from .models import Breed
 from .utils.filters import AnimalFilter
-from .utils.permissions import AnimalBaseAccess, BreedBaseAccess
+from .utils.permissions import AnimalBaseAccess
+from .utils.permissions import BreedBaseAccess
 from .utils.serializers import AnimalSerializer
 from .utils.serializers import BreedSerializer
 from .utils.serializers import CreateAnimalSerializer
-from apps.users.utils.choices import UserRole
-from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class AnimalList(generics.ListCreateAPIView):
@@ -25,7 +32,7 @@ class AnimalList(generics.ListCreateAPIView):
     permission_classes = [AnimalBaseAccess]
 
     def get_serializer_class(self):
-        # Return serializer for creating animals
+        # Return serializer for creating  / updating animals
         if self.request.method in ["POST", "PUT", "PATCH"]:
             return CreateAnimalSerializer
         else:
@@ -102,9 +109,15 @@ class AnimalList(generics.ListCreateAPIView):
 
 class AnimalDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Animal.objects.all()
-    serializer_class = AnimalSerializer
     name = "animal"
     permission_classes = [AnimalBaseAccess]
+
+    def get_serializer_class(self):
+        # Return serializer for creating  / updating animals
+        if self.request.method in ["POST", "PUT", "PATCH"]:
+            return CreateAnimalSerializer
+        else:
+            return AnimalSerializer  # Default serializer class
 
     def patch(self, request, *args, **kwargs):
         instance = self.get_object()

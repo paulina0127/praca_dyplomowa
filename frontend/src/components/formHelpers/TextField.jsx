@@ -1,5 +1,7 @@
 import { ErrorMessage, useField } from "formik";
 
+import React from "react";
+
 const TextField = ({ label, classes, ...props }) => {
   const [field, meta] = useField(props);
   return (
@@ -9,7 +11,7 @@ const TextField = ({ label, classes, ...props }) => {
       </label>
 
       <input
-        className={`w-full rounded-xl px-4 py-1 font-sans text-base ${classes} ${
+        className={`w-full rounded-xl px-4 py-1 font-sans text-base placeholder:text-black ${classes} ${
           meta.touched && meta.error && "is-invalid"
         }`}
         {...field}

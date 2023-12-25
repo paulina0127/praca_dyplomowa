@@ -1,8 +1,12 @@
 """Views for Core app."""
 
+# Standard Library
 import os
+
+# Django
 from django.conf import settings
-from django.http import HttpResponse, Http404
+from django.http import Http404
+from django.http import HttpResponse
 
 
 def serve_image(request, path):

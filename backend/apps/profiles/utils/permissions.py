@@ -1,6 +1,6 @@
 # Third-party
-from rest_framework.permissions import BasePermission
 from rest_framework.permissions import SAFE_METHODS
+from rest_framework.permissions import BasePermission
 
 # Project
 from apps.users.utils.choices import UserRole

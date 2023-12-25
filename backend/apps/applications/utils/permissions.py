@@ -11,7 +11,12 @@ class ApplicationBaseAccess(BasePermission):
         # True if user is admin or shelter
         user = request.user
 
-        if user.is_authenticated and user.role in [UserRole.ADMIN, UserRole.SHELTER]:
+        if request.method in (
+            *SAFE_METHODS,
+            "POST",
+        ):
+            return True
+        elif user.is_authenticated and user.role in [UserRole.ADMIN, UserRole.SHELTER]:
             return True
         return False
 

@@ -1,6 +1,8 @@
 import { ErrorMessage, useField } from "formik";
 
-const FileField = ({ label, accept, ...props }) => {
+import React from "react";
+
+const FileField = ({ accept, ...props }) => {
   const [field, meta] = useField(props);
 
   const onChange = (e) => {

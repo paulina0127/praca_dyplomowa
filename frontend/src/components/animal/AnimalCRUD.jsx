@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import AnimalForm from "./AnimalForm";
 import { Loader } from "..";
+import React from "react";
 import { getAnimal } from "../../features/animal/animalSlice";
 import { listBreeds } from "../../features/breed/breedSlice";
 import { useEffect } from "react";
@@ -30,7 +31,7 @@ export const AnimalCreate = () => {
   };
 
   useEffect(() => {
-    dispatch(listBreeds());
+    dispatch(listBreeds({}));
   }, []);
 
   if (isLoading) return <Loader />;
@@ -42,7 +43,7 @@ export const AnimalUpdate = ({ animalId }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listBreeds());
+    dispatch(listBreeds({}));
     dispatch(getAnimal(animalId));
   }, []);
 

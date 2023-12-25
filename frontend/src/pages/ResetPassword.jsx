@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsPersonCheck } from "react-icons/bs";
 import { Home } from ".";
 import { Modal } from "antd";
+import React from "react";
 import { resetPasswordConfirm } from "../features/user/userSlice";
 import { validateResetPasswordConfirm } from "../validators";
 
@@ -58,7 +59,7 @@ const ResetPassword = () => {
                   resetForm({ values: "" });
                 }}
               >
-                {({ values, isValid }) => (
+                {({ isValid }) => (
                   <Form id="form">
                     <TextField
                       label="Hasło"
@@ -73,7 +74,11 @@ const ResetPassword = () => {
                       classes="bg-cream border-[1px] border-solid border-cherry"
                     />
                     <div className="mt-2 flex justify-center">
-                      <button type="submit" className="btn btn-primary">
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={isLoading || !isValid}
+                      >
                         {isLoading ? <Loader /> : "Zmień hasło"}
                       </button>
                     </div>
