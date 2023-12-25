@@ -10,3 +10,4 @@ from .models import Shelter
 @admin.register(Shelter)
 class ShelterAdmin(admin.ModelAdmin):
     list_display = ["id", "name", "nip"]
+    search_fields = ["name", "nip", "city"]
