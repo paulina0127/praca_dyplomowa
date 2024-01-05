@@ -13,7 +13,7 @@ from ..models import Shelter
 class ShelterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shelter
-        exclude = ["user"]
+        exclude = ["user", "is_verified"]
 
     def validate_nip(self, value):
         # Check if NIP consists of 10 digits

@@ -59,7 +59,9 @@ const shelterSlice = createSlice({
       .addCase(createShelter.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.shelter = payload;
-        toast.success("Pomyślnie utworzono profil schroniska");
+        toast.success(
+          "Pomyślnie utworzono profil schroniska. Proszę czekać na zweryfikowanie profilu.",
+        );
         window.location.reload();
       })
       .addCase(createShelter.rejected, (state, { payload }) => {

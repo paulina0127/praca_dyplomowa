@@ -47,11 +47,30 @@ class ApplicationList(generics.ListCreateAPIView):
         instance = serializer.save()
 
         # Send email to the applicant
-        subject = "Adoptable - Aplikacja o adopcję została złożona"
-        message = f"Aplikacja o adopcję zwierzęcia {instance.animal} ze schroniska {instance.animal.shelter} została złożona! Dziękujemy za zainteresowanie naszym zwierzęciem.\n\nW następnym e-mailu otrzymasz informację o odpowiedzi na aplikację.\n\nZespół Adoptable"
-        recipient_list = [instance.email]
+        subjectApplicant = "Adoptable - Aplikacja o adopcję została złożona"
+        messageApplicant = f"Aplikacja o adopcję zwierzęcia {instance.animal} ze schroniska {instance.animal.shelter} została złożona! Dziękujemy za zainteresowanie naszym zwierzęciem.\n\nW następnym e-mailu otrzymasz informację o odpowiedzi na aplikację.\n\nZespół Adoptable"
+        recipient_listApplicant = [instance.email]
 
-        send_mail(subject, message, "kontakt@adoptable.pl", recipient_list)
+        send_mail(
+            subjectApplicant,
+            messageApplicant,
+            "kontakt@adoptable.pl",
+            recipient_listApplicant,
+        )
+
+        # Send email to the shelter
+        subjectShelter = (
+            "Adoptable - Aplikacja o adopcję twojego zwierzęcia została złożona"
+        )
+        messageShelter = f"Aplikacja o adopcję zwierzęcia {instance.animal} z twojego schroniska została złożona! Możesz zobaczyć szczegóły aplikacji na naszej stronie.\n\nZespół Adoptable"
+        recipient_listShelter = [instance.animal.shelter.user.email]
+
+        send_mail(
+            subjectShelter,
+            messageShelter,
+            "kontakt@adoptable.pl",
+            recipient_listShelter,
+        )
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

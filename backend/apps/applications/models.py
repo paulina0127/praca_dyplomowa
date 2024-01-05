@@ -22,8 +22,8 @@ class Application(models.Model):
         default=ApplicationStatus.SUBMTTED,
     )
     added_at = models.DateTimeField(auto_now_add=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     email = models.EmailField()
     phone_number = PhoneNumberField()
     has_animals = ArrayField(
@@ -40,6 +40,8 @@ class Application(models.Model):
 
     class Meta:
         ordering = ["-added_at"]
+        verbose_name = "Aplikacja"
+        verbose_name_plural = "Aplikacje"
 
     def __str__(self):
-        return f"Application {self.id}"
+        return f"Aplikacja nr {self.id}"

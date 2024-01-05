@@ -24,12 +24,26 @@ from .utils.serializers import CreateAnimalSerializer
 
 
 class AnimalList(generics.ListCreateAPIView):
-    queryset = Animal.objects.all()
     name = "animals"
     filterset_class = AnimalFilter
     search_fields = ["name", "breed__name"]
     ordering_fields = ["id", "added_at"]
     permission_classes = [AnimalBaseAccess]
+
+    def get_queryset(self):
+        user = self.request.user
+        shelter_id = self.request.GET.get("shelter")
+        print(shelter_id)
+
+        # Return animals
+        if not user.is_authenticated:
+            return Animal.objects.filter(shelter__is_verified=True)
+        elif user.role == UserRole.ADMIN:
+            return Animal.objects.all()
+        elif user.role == UserRole.SHELTER and shelter_id == str(user.shelter.id):
+            return Animal.objects.filter(shelter=user.shelter)
+        else:
+            return Animal.objects.filter(shelter__is_verified=True)
 
     def get_serializer_class(self):
         # Return serializer for creating  / updating animals

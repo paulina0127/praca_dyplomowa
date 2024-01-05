@@ -1,5 +1,6 @@
 import { Form, Formik } from "formik";
 import { Loader, TextField } from "..";
+import React, { useState } from "react";
 import {
   changeEmail,
   changePassword,
@@ -12,7 +13,8 @@ import {
   validateDeleteAccount,
 } from "../../validators";
 
-import React from "react";
+import { FaTrash } from "react-icons/fa";
+import { Modal } from "antd";
 
 export const ChangeEmailForm = () => {
   const dispatch = useDispatch();
@@ -125,6 +127,7 @@ export const ChangePasswordForm = () => {
 export const DeleteAccountForm = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((store) => store.user);
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <Formik
@@ -136,7 +139,7 @@ export const DeleteAccountForm = () => {
       }}
     >
       {({ isValid }) => (
-        <Form>
+        <Form id="form">
           <h3 className="text-2xl font-bold text-black">Usuń konto</h3>
           <div className="grid w-full grid-cols-2 items-center">
             <div className="p-5 pt-2">
@@ -149,12 +152,43 @@ export const DeleteAccountForm = () => {
 
             <div className="justify-self-center p-5 pt-2">
               <button
-                type="submit"
-                className="btn btn-secondary"
-                disabled={isLoading | !isValid}
+                type="button"
+                className="btn btn-secondary justify-self-start"
+                onClick={() => setOpenModal(true)}
               >
-                {isLoading ? <Loader /> : "Usuń konto"}
+                Usuń konto
               </button>
+              <Modal
+                open={openModal}
+                onCancel={() => setOpenModal(false)}
+                className="font-sans"
+                footer={null}
+                centered
+              >
+                <div className="mb-2 flex items-center gap-2 text-cherry">
+                  <h1 className="text-3xl font-bold">
+                    Potwierdź usunięcie konta
+                  </h1>
+                  <FaTrash size="32px" />
+                </div>
+
+                <div className="my-4">
+                  <p className="font-sans text-base text-black">
+                    Usunięcia konta nie można cofnąć
+                  </p>
+                </div>
+
+                <div className="mt-2 flex justify-center">
+                  <button
+                    type="submit"
+                    form="form"
+                    className="btn btn-primary"
+                    disabled={isLoading || !isValid}
+                  >
+                    {isLoading ? <Loader /> : "Usuń"}
+                  </button>
+                </div>
+              </Modal>
             </div>
           </div>
         </Form>

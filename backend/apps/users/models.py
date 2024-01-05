@@ -51,3 +51,5 @@ class CustomUser(AbstractUser):
 
     class Meta:
         ordering = ["id"]
+        verbose_name = "Niestandardowy użytkownik"
+        verbose_name_plural = "Niestandardowi użytkownicy"

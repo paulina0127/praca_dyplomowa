@@ -17,14 +17,12 @@ const Header = () => {
 
   const guestLinks = () => {
     return (
-      <ul className="flex gap-3">
-        <li className="btn btn-primary">
-          <Link to="/logowanie">Zaloguj się</Link>
-        </li>
-        <li className="btn btn-secondary">
-          <Link to="/rejestracja">Zarejestruj się</Link>
-        </li>
-      </ul>
+      <div className="flex items-center gap-3">
+        <p className="font-bold">Dla schronisk</p>
+        <Link to="/logowanie" className="btn btn-primary">
+          Zaloguj się
+        </Link>
+      </div>
     );
   };
 

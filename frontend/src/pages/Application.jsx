@@ -95,7 +95,7 @@ const Application = () => {
                       </div>
                       {application?.has_animals?.length > 0
                         ? application?.has_animals.join(", ")
-                        : "Nie"}
+                        : "Nie ma innych zwierząt"}
                     </div>
                   </Tooltip>
                 </div>
@@ -109,7 +109,9 @@ const Application = () => {
                       <div className="rounded-xl bg-rose p-2 text-lg">
                         <MdChildCare />
                       </div>
-                      {application?.has_children ? "Tak" : "Nie"}
+                      {application?.has_children
+                        ? "Tak, posiada małe dzieci"
+                        : "Nie posiada małych dzieci"}
                     </div>
                   </Tooltip>
                   <Tooltip
@@ -120,7 +122,9 @@ const Application = () => {
                       <div className="rounded-xl bg-rose p-2">
                         <MdOutlineSportsFootball />
                       </div>
-                      {application?.active ? "Tak" : "Nie"}
+                      {application?.active
+                        ? "Tak, zajmie się zwierzęciem bardzo aktywnym fizycznie"
+                        : "Nie zajmie się zwierzęciem bardzo aktywnym fizycznie"}
                     </div>
                   </Tooltip>
 
@@ -132,7 +136,9 @@ const Application = () => {
                       <div className="rounded-xl bg-rose p-2">
                         <MdOutlineMedicalServices />
                       </div>
-                      {application?.medical_ability ? "Tak" : "Nie"}
+                      {application?.medical_ability
+                        ? "Tak, zajmie się zwierzęciem z problemami zdrowotnymi"
+                        : "Nie zajmie się zwierzęciem z problemami zdrowotnymi"}
                     </div>
                   </Tooltip>
                 </div>

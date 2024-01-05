@@ -15,6 +15,7 @@ import { getAnimal } from "../features/animal/animalSlice";
 const Animal = () => {
   const dispatch = useDispatch();
   const { isLoading, animal } = useSelector((store) => store.animal);
+  const { user } = useSelector((store) => store.user);
   const animal_id = useParams().id;
   const [openModal, setOpenModal] = useState(false);
 
@@ -136,18 +137,22 @@ const Animal = () => {
               {animal?.shelter?.street_address},{" "}
               <span className="font-bold">{animal?.shelter?.city}</span>
             </p>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => setOpenModal(true)}
-            >
-              Aplikuj o adopcję
-            </button>
-            <ApplicationCreate
-              openModal={openModal}
-              closeModal={() => setOpenModal(false)}
-              animalId={animal?.id}
-            />
+            {!user && (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setOpenModal(true)}
+                >
+                  Aplikuj o adopcję
+                </button>
+                <ApplicationCreate
+                  openModal={openModal}
+                  closeModal={() => setOpenModal(false)}
+                  animalId={animal?.id}
+                />
+              </>
+            )}
           </div>
         </div>
 

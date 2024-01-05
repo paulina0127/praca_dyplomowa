@@ -22,6 +22,7 @@ class Shelter(models.Model):
     city = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="shelters/images", blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
     user = models.OneToOneField(
         to=User,
         related_name="shelter",
@@ -30,6 +31,8 @@ class Shelter(models.Model):
 
     class Meta:
         ordering = ["id"]
+        verbose_name = "Schronisko"
+        verbose_name_plural = "Schroniska"
 
     def __str__(self) -> str:
         return f"{self.name}"

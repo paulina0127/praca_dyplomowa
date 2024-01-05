@@ -24,6 +24,8 @@ class Breed(models.Model):
 
     class Meta:
         ordering = ["id"]
+        verbose_name = "Rasa"
+        verbose_name_plural = "Rasy"
 
     def __str__(self):
         return f"{self.name}"
@@ -71,6 +73,8 @@ class Animal(models.Model):
 
     class Meta:
         ordering = ["-added_at"]
+        verbose_name = "Zwierzę"
+        verbose_name_plural = "Zwierzęta"
 
     def __str__(self):
         return f"{self.name}"
@@ -84,6 +88,8 @@ class AnimalImage(models.Model):
 
     class Meta:
         ordering = ["id"]
+        verbose_name = "Zdjęcie zwierzęcia"
+        verbose_name_plural = "Zdjęcia zwierząt"
 
     def __str__(self):
         return f"{self.animal.name} {self.id}"
